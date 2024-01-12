@@ -1,19 +1,16 @@
-const fs = require('fs');
+import fs from 'fs/promises';
+
+const content = 'I am fresh and young';
+const baseBath = './files';
+const fileName = 'fresh.txt';
 
 const create = async () => {
-  const content = 'I am fresh and young';
-  const baseBath = './files';
-  const fileName = 'fresh.txt';
-  const alreadyExists = fs.existsSync(`${baseBath}/${fileName}`);
-
-  if (!alreadyExists) {
-    fs.writeFile(`${baseBath}/${fileName}`, content, (err) => {
-      if (err) throw err;
-    });
+  try {
+    await fs.writeFile(`${baseBath}/${fileName}`, content, { flag: 'wx' });
     console.log(`File '${fileName}' created!`);
-  } else {
-    throw Error('FS operation failed');
+  } catch {
+    throw new Error('FS operation failed');
   }
 };
 
-create();
+await create();
