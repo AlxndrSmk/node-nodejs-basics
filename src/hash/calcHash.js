@@ -1,13 +1,19 @@
-import fs from 'node:fs';
+import { readFile } from 'fs/promises';
 import { createHash } from 'node:crypto';
 
 const calculateHash = async () => {
-  fs.readFile('./files/fileToCalculateHashFor.txt', 'utf8', (err, data) => {
-    if (err) {
-      throw new Error('FS operation failed');
+  const fileStream = await readFile(
+    './files/fileToCalculateHashFor.txt',
+    'utf8',
+    (err, data) => {
+      if (err) {
+        throw new Error('FS operation failed');
+      }
+      return data;
     }
-    console.log(createHash('sha256').update(data).digest('hex'));
-  });
+  );
+
+  console.log(createHash('sha256').update(fileStream).digest('hex'));
 };
 
 await calculateHash();
