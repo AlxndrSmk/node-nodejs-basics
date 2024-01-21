@@ -12,12 +12,12 @@ const compress = async () => {
   try {
     const gzip = createGzip();
     await pipe(source, gzip, destination);
+
+    console.log('File compressed successfully.');
   } catch (err) {
     console.error('An error occurred:', err);
     process.exitCode = 1;
   }
-
-  console.log('File compressed successfully!');
 };
 
 await compress();
