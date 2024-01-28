@@ -14,6 +14,7 @@ const performCalculations = async () => {
       results.push(result);
 
       if (results.length === numWorkers) {
+        results.sort((a, b) => (a.data < b.data ? -1 : 1));
         console.log(results);
         workers.forEach((worker) => worker.terminate());
       }
@@ -23,7 +24,8 @@ const performCalculations = async () => {
       console.error('Worker error:', error);
     });
 
-    worker.postMessage(i + 10);
+    // worker.postMessage(i + 10);
+    worker.postMessage(`${i + 10}:${i}`); // Send data and wor
   }
 };
 

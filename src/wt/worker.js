@@ -7,7 +7,9 @@ const nthFibonacci = (n) =>
 
 const sendResult = () => {
   parentPort.on('message', (data) => {
-    n = data;
+    const messageParts = data.split(':');
+    n = parseInt(messageParts[0]);
+
     try {
       const res = nthFibonacci(n);
       parentPort.postMessage({ status: 'resolved', data: res });
